@@ -1,43 +1,41 @@
 #include "monty.h"
 
 /**
- * push - function pushes node to top of stack
+ * _push - function pushes node to top of stack
  * @stack: pointer to the stack
  * @line_number: index line number
- * Return: 0 for success
  */
-void push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void _push(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	stack_t *new_node;
+	(void)line_number;
 
-	if (stack == NULL)
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
 	{
 		fprintf(stderr, "L<line_number>: usage: push integer\n");
 		exit(EXIT_FAILURE);
 	}
-	new_node = malloc(sizeof(stack_t));
 
+	new_node->n = var_global.push_arg;
 	new_node->next = *stack;
 	new_node->prev = NULL;
-	new_node->n = data;
 
-	if (*stack)
+	if (*stack != NULL)
 		(*stack)->prev = new_node;
 	*stack = new_node;
 }
 
 /**
- * pall - function prints all the data in stack
+ * _pall - function prints all the data in stack
  * @stack: pointer to stack
  * @line_number: index line number
- * Return: 0 on success
  */
-void pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void _pall(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	stack_t *printer;
 
 	printer = *stack;
-
 	while (printer != NULL)
 	{
 		printf("%d\n", printer->n);
@@ -46,23 +44,20 @@ void pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 }
 
 /**
- * pint - prints data at top of the stack
+ * _pint - prints data at top of the stack
  * @stack: pointer to stack
  * @line_number: index line number
- * Return: 0 on success
  */
-void pint(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void _pint(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	stack_t *printer;
 
 	printer = *stack;
-
 	if (printer == NULL)
 	{
-		fprintf(stderr, "L<line_number>: can't pint, stack empty");
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	else
 		printf("%d\n", printer->n);
 }
 
@@ -70,15 +65,15 @@ void pint(stack_t **stack, __attribute__((unused)) unsigned int line_number)
  * pop - function removes node from the list
  * @stack: pointer to stack
  * @line_number: index line number
- * Return: removed item
+ * Return: void
  */
-void pop(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void _pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *node = *stack;
 
 	if (stack == NULL || *stack == NULL)
 	{
-		fprintf(stderr, "L<line_number>: can't pop an empty stack");
+		fprintf(stderr, "L%d: can't pop an empty stack", line_number);
 		exit(EXIT_FAILURE);
 	}
 
@@ -87,4 +82,21 @@ void pop(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 	if (*stack != NULL)
 		(*stack)->prev = NULL;
 	free(node);
+}
+
+/**
+ * free_dlistint - free a list
+ * @head: pointer to first node
+ *
+ */
+void free_dlistint(stack_t *head)
+{
+	stack_t *tmp;
+
+	while (head != NULL)
+	{
+		tmp = head->next;
+		free(head);
+		head = tmp;
+	}
 }
