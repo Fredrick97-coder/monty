@@ -55,25 +55,25 @@ void _pint(stack_t **stack, __attribute__((unused))unsigned int line_number)
 	printer = *stack;
 	if (printer == NULL)
 	{
-		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		fprintf(stderr, "L<line_number>: can't pint, stack empty\n");
 		exit(EXIT_FAILURE);
 	}
 		printf("%d\n", printer->n);
 }
 
 /**
- * pop - function removes node from the list
+ * _pop - function removes node from the list
  * @stack: pointer to stack
  * @line_number: index line number
  * Return: void
  */
-void _pop(stack_t **stack, unsigned int line_number)
+void _pop(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	stack_t *node = *stack;
 
 	if (stack == NULL || *stack == NULL)
 	{
-		fprintf(stderr, "L%d: can't pop an empty stack", line_number);
+		fprintf(stderr, "L<line_number>: can't pop an empty stack\n");
 		exit(EXIT_FAILURE);
 	}
 

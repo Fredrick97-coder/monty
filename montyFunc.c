@@ -1,4 +1,6 @@
 #include "monty.h"
+#include <stdio.h>
+
 /**
  * read_file - reads a bytecode file and runs commands
  * @filename: pathname to file
@@ -22,7 +24,7 @@ void read_file(char *filename, stack_t **stack)
 		exit(EXIT_FAILURE);
 	}
 
-	while ((read = getline(&var_global.buffer, &i, var_global.file)) != -1)
+	while ((read = getline(&var_global.buffer, &i, var_global.file)) != 1)
 	{
 		line = parse_line(var_global.buffer, stack, line_count);
 		if (line == NULL || line[0] == '#')
